@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:jamkiss/constants/spotify.dart';
+import 'package:spotify/spotify.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -50,6 +55,34 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // final search = spotifyApiClient.search;
+    // search.get("Take on").getPage(30, 0).then((pages) {
+    //   var items = pages[0].items;
+    //   if (items != null) {
+    //     // for (var item in items) {
+    //       // print("Values Received: ${item.id} - ${item.name} (${item.type})");
+
+    //       // if (item is PlaylistSimple) {
+    //         // print(
+    //         //   item.id,
+    //         // );
+    //         // if (item.tracks != null) {
+    //         // print("tracks: ${item.tracks!.itemsNative}");
+    //         // }
+    //       // }
+    //     }
+    //   }
+    // });
+    // spotifyApiClient.tracks.get('2WfaOiMkCvy7F5fcp2zZ8L').then((track) {
+    //   print("Track Retrevied: ${track.name}");
+    // });
+  }
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -75,41 +108,41 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: FutureBuilder<List<dynamic>>(
+        future: spotifyApiClient.search
+            .get("Take on")
+            .getPage(30, 0)
+            .then((pages) async {
+          var p = pages.expand((page) {
+            List l = [];
+            try {
+              l = page.items?.toList() ?? [];
+              print("items: ${l}");
+            } catch (e) {
+              l = [];
+            }
+            return l;
+          }).toList();
+
+          print("list: ${p.length}");
+          return p;
+        }).catchError((e) => print("Error !! $e")),
+        builder: (context, snapshot) {
+          print(
+              "Items: ${snapshot.data ?? []}, length: ${snapshot.data?.length ?? 0}");
+          var items = snapshot.data ?? [];
+          return snapshot.connectionState == ConnectionState.waiting
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: ((context, i) =>
+                      Text("${items[i].name} - (${items[i].type})")),
+                );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
