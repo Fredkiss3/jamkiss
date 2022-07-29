@@ -1,16 +1,30 @@
-# jamkiss
+# JAMKISS 🎶
 
-A new Flutter project.
+Projet de JAMMING DE MUSIQUE.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Pour lancer le projet chez vous 🚀
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Pour faire fonctionner le project chez vous:
+    
+1. [Créez un compte developpeur spotify](https://developer.spotify.com/dashboard/).
+2. Ajoutez une application avec votre id client et votre clé secrète.
+3. Ajoutez vos identifiants à l'APP :
+   1.  Si vous utilisez VSCODE, renommer le dossier `.vscode_example` en `.vscode` et dans le fichier `launch.json`, et remplacez `<CLIENT_ID>` par votre id client et `<CLIENT_SECRET>` par votre secret:
+        ```json
+        {
+            "configurations": [
+                {
+                    // ...autres options
+                    "toolArgs": [
+                    "--dart-define=SPOTIFY_CLIENT_ID=<CLIENT_ID>",
+                    "--dart-define=SPOTIFY_CLIENT_SECRET=<CLIENT_SECRET>"
+                    ]
+                }
+            ]
+        }
+        ```
+   2.  Si vous utilisez la ligne de commande, lancez la commande suivante, en remplaceant `<CLIENT_ID>` par votre id client et `<CLIENT_SECRET>` par votre secret :
+        ```bash
+        flutter run --dart-define=SPOTIFY_CLIENT_ID=<CLIENT_ID> --dart-define=SPOTIFY_CLIENT_SECRET=<CLIENT_SECRET>
+        ```
