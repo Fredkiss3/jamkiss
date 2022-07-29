@@ -14,3 +14,10 @@ int compareElements(SearchResultItem a, SearchResultItem b) {
     }
   }
 }
+
+String getDuration(int time) {
+  final seconds = (time % 60).toString().padLeft(2, '0');
+  final minutes = (time / 60).floor();
+
+  return "$minutes:$seconds";
+}
