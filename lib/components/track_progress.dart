@@ -66,7 +66,7 @@ class TrackProgress extends StatelessWidget {
   }
 }
 
-/// Custom Track Shapre pour régler un problème de padding
+/// Custom Track Shape pour régler un problème de padding
 /// avec le slider
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   @override

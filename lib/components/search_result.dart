@@ -18,12 +18,11 @@ class SearchResult extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, !isLast ? 5.0 : 20.0),
       child: InkWell(
         onTap: () {
-          if (element.type == 'track') {
+          if (element.object.type == 'track') {
             Navigator.of(context).pushNamed('/single',
-                arguments: SingleTrackArguments(
-                    track: element.intrinsicObject as Track,
-                    hasNext: false,
-                    hasPrevious: false));
+                arguments: SingleTrack(
+                  track: element.object as Track,
+                ));
           }
         },
         // splashColor: Colors.red.shade100,
@@ -62,7 +61,7 @@ class SearchResult extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      element.type,
+                      element.artist,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           fontSize: 14,

@@ -1,18 +1,14 @@
-import 'package:jamkiss/constants/spotify.dart';
 import 'package:spotify/spotify.dart';
 
-class SingleTrackArguments {
+class SingleTrack {
   late Track _track;
-  bool _hasNext = false;
-  bool _hasPrevious = false;
+  String? _nextID;
+  String? _previousID;
 
-  SingleTrackArguments(
-      {required Track track, bool? hasNext, bool? hasPrevious}) {
+  SingleTrack({required Track track, String? nextID, String? prevID}) {
     _track = track;
-    _hasNext = hasNext ?? false;
-    _hasPrevious = hasPrevious ?? false;
-
-    print("track: ${_track.id}, ${_track.previewUrl}");
+    _nextID = nextID;
+    _previousID = prevID;
   }
 
   String get name => _track.name!;
@@ -26,6 +22,9 @@ class SingleTrackArguments {
   String? get artistID => _track.artists?.first.id;
   String get artist => _track.artists?.first.name ?? 'Unknown';
 
-  bool get hasNext => _hasNext;
-  bool get hasPrevious => _hasPrevious;
+  bool get hasNext => _nextID != null;
+  bool get hasPrevious => _previousID != null;
+
+  String? get nextID => _nextID;
+  String? get prevID => _previousID;
 }

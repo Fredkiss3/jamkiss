@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jamkiss/components/mini_player.dart';
 import 'package:jamkiss/constants/theme.dart';
+import 'package:jamkiss/model/current_playing.dart';
 import 'package:jamkiss/screens/home.dart';
 import 'package:jamkiss/screens/single.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => CurrentPlayingModel(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'JAMKISS - Musics for jamming 🎶',
         theme: theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
               primary: primaryColor,
@@ -49,7 +55,7 @@ class MyApp extends StatelessWidget {
                 color: textColor),
             headline6: TextStyle(
                 fontFamily: 'Chillax',
-                fontSize: 16.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.w500,
                 height: 1,
                 color: textColor),
@@ -67,6 +73,18 @@ class MyApp extends StatelessWidget {
                 color: Colors.white),
           ),
         ),
+        builder: ((context, child) {
+          return Stack(
+            children: [
+              child!,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: const [MiniPlayer()],
+              )
+            ],
+          );
+        }),
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case '/':
@@ -77,6 +95,7 @@ class MyApp extends StatelessWidget {
                   builder: (_) => const SingleTrackScreen(),
                   settings: settings);
           }
+          return null;
         });
   }
 }

@@ -5,9 +5,9 @@ int compareElements(SearchResultItem a, SearchResultItem b) {
   if (a.type == b.type) {
     return 0;
   } else {
-    if (b.type == 'track') {
+    if (b.type == 'Titre') {
       return 1;
-    } else if (a.type == 'track') {
+    } else if (a.type == 'Titre') {
       return -1;
     } else {
       return 0;

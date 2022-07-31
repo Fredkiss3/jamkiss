@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jamkiss/components/search_result.dart';
 import 'package:jamkiss/constants/spotify.dart';
@@ -117,11 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
             future: spotifyApiClient.search
                 .get(_query, types: [
                   SearchType.track,
-                  SearchType.album,
-                  SearchType.artist,
-                  SearchType.playlist
                 ])
-                .getPage(4, 0)
+                .getPage(20, 0)
                 .then((pages) => pages.expand((page) {
                       try {
                         return page.items?.toList() ?? [];
@@ -129,10 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return [];
                       }
                     }).map((item) => SearchResultItem(
-                        name: item.name,
-                        id: item.id,
-                        type: item.type,
-                        intrinsicObject: item))),
+                        name: item.name, id: item.id, object: item))),
             builder: (context, snapshot) {
               List<SearchResultItem> items = snapshot.data?.toList() ?? [];
               items.sort(compareElements);
