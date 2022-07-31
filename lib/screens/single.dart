@@ -4,7 +4,6 @@ import 'package:jamkiss/components/track_progress.dart';
 import 'package:jamkiss/constants/theme.dart';
 import 'package:jamkiss/model/current_playing.dart';
 import 'package:jamkiss/model/single_track_arguments.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:provider/provider.dart';
 
 class SingleTrackScreen extends StatefulWidget {

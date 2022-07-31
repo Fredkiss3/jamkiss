@@ -19,11 +19,6 @@ class TrackProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var value = currentTime;
-    // if (totalTime == 0) {
-    //   value
-    // }
-
     return Column(
       children: [
         SizedBox(
