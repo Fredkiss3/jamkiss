@@ -27,7 +27,6 @@ class SearchResult extends StatelessWidget {
                 ));
           }
         },
-        // splashColor: Colors.red.shade100,
         borderRadius: BorderRadius.circular(10.0),
         child: Ink(
           decoration: BoxDecoration(

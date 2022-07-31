@@ -2,6 +2,8 @@
 
 Projet de JAMMING DE MUSIQUE.
 
+![home](./Screenshot_home.png) ![single](./Screenshot_single.png)
+
 
 ## Pour lancer le projet chez vous 🚀
 
