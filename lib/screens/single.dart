@@ -16,49 +16,8 @@ class SingleTrackScreen extends StatefulWidget {
 
 class _SingleTrackScreenState extends State<SingleTrackScreen> {
   bool _hasStarted = false;
-  bool _isPlaying = false;
   int _currentTime = 0;
   bool _isListenerAttached = false;
-  // final player = AudioPlayer(playerId: 'current');
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   player.onPlayerStateChanged.listen((state) {
-  //     setState(() {
-  //       _isPlaying = state == PlayerState.playing;
-  //     });
-  //   });
-  //   player.onPositionChanged.listen((duration) {
-  //     setState(() {
-  //       _currentTime = duration.inSeconds;
-  //       if (duration.inMilliseconds > 29000) {
-  //         _isPlaying = false;
-  //       }
-  //     });
-  //   });
-  // }
-
-  // Future<void> start(CurrentPlayingModel currentPlaying) async {
-  //   final track = ModalRoute.of(context)!.settings.arguments as SingleTrack;
-
-  //   currentPlaying.track = track;
-
-  //   await player.play(UrlSource(track.previewUrl!));
-  //   setState(() {
-  //     _hasStarted = true;
-  //   });
-  // }
-
-  // Future<void> toggle(CurrentPlayingModel currentPlaying) async {
-  //   await currentPlaying.toggle();
-  //   if (player.state == PlayerState.playing) {
-  //     await player.pause();
-  //   } else {
-  //     await player.resume();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,19 +26,9 @@ class _SingleTrackScreenState extends State<SingleTrackScreen> {
     return Consumer<CurrentPlayingModel>(
         builder: ((context, currentPlaying, child) {
       if (!_isListenerAttached && currentPlaying.track?.id == track.id) {
-        currentPlaying.player.onPlayerStateChanged.listen((state) {
-          setState(() {
-            _isPlaying = state == PlayerState.playing;
-          });
-        });
-
         currentPlaying.player.onPositionChanged.listen((duration) {
           setState(() {
             _currentTime = duration.inSeconds;
-            if (currentPlaying.duration != null &&
-                duration.inSeconds >= currentPlaying.duration!.inSeconds) {
-              _isPlaying = false;
-            }
           });
         });
 
@@ -225,7 +174,8 @@ class _SingleTrackScreenState extends State<SingleTrackScreen> {
                             padding: const EdgeInsets.all(20.0),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50.0))),
-                        child: Icon(currentPlaying.isPlaying
+                        child: Icon(currentPlaying.track?.id == track.id &&
+                                currentPlaying.isPlaying
                             ? CupertinoIcons.pause_fill
                             : CupertinoIcons.play_fill)),
                     const SizedBox(

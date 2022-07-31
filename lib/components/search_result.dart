@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:jamkiss/constants/theme.dart';
 import 'package:jamkiss/model/search_result_item.dart';
 import 'package:jamkiss/model/single_track_arguments.dart';
-import 'package:spotify/spotify.dart';
 
 class SearchResult extends StatelessWidget {
   final SearchResultItem element;
@@ -17,11 +16,14 @@ class SearchResult extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, !isLast ? 5.0 : 20.0),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           if (element.object.type == 'track') {
+            FocusManager.instance.primaryFocus?.unfocus();
+            await Future.delayed(const Duration(milliseconds: 200));
+
             Navigator.of(context).pushNamed('/single',
                 arguments: SingleTrack(
-                  track: element.object as Track,
+                  track: element.object,
                 ));
           }
         },
@@ -65,7 +67,7 @@ class SearchResult extends StatelessWidget {
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           fontSize: 14,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.w400,
                           color: bgColor),
                     ),
                   ],
